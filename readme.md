@@ -6,7 +6,8 @@ This is a simple repairkit system for fivem
 - Item based
 - Fancy discord log
 - Update checker
-- Multiple repairkits
+- Multiple repairkits support
+- With animation
 - 0.0 ms on idle
 - 0.0 ms while in use
 

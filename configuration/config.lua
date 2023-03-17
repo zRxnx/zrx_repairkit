@@ -1,5 +1,6 @@
 local seconds, minutes = 1000, 60000
 Config = {}
+--| Discord Webhook in 'server/server.lua'
 Config.Anim = {
     dict = 'anim@amb@clubhouse@tutorial@bkr_tut_ig3@',
     lib = 'machinic_loop_mechandplayer'

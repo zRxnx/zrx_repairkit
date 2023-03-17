@@ -5,7 +5,7 @@ use_experimental_fxv2_oal 'yes'
 
 author 'zRxnx'
 description 'Simple repairkit system'
-version '1.0.0'
+version '1.1.0'
 
 shared_scripts {
     'configuration/*.lua'
