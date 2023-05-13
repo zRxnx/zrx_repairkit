@@ -35,7 +35,7 @@ StartThread = function(index)
         local carHood = GetWorldPositionOfEntityBone(pedCar, GetEntityBoneIndexByName(pedCar, 'bonnet'))
         local pedCoords
         if carHood.x == 0 and carHood.y == 0 then
-            RepairVehicle(pedCar)
+            RepairVehicle(pedCar, index)
         else
             TaskLeaveVehicle(ped, pedCar, 0)
             Wait(1000)
