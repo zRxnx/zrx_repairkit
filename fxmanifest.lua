@@ -4,11 +4,18 @@ lua54 'yes'
 use_experimental_fxv2_oal 'yes'
 
 author 'zRxnx'
-description 'Simple repairkit system'
-version '1.1.0'
+description 'Advanced repairkit system'
+version '2.0.0'
+
+dependencies {
+    'es_extended',
+	'ox_lib'
+}
 
 shared_scripts {
-    'configuration/*.lua'
+    '@ox_lib/init.lua',
+    'configuration/config.lua',
+    'configuration/strings.lua',
 }
 
 client_scripts {
@@ -16,5 +23,6 @@ client_scripts {
 }
 
 server_scripts {
+    'configuration/webhook.lua',
     'server/*.lua'
 }
