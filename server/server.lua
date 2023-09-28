@@ -1,4 +1,6 @@
 ESX, PLAYER_CACHE, USED = Config.EsxImport(), {}, {}
+local TriggerClientEvent = TriggerClientEvent
+local GetPlayers = GetPlayers
 
 RegisterNetEvent('esx:playerLoaded', function(player)
     PLAYER_CACHE[player] = GetPlayerData(player)
@@ -35,7 +37,7 @@ RegisterNetEvent('zrx_repairkit:server:syncRepair', function(vehicle, index)
         xPlayer.removeInventoryItem(Config.RepairKits[index].item, 1)
         TriggerClientEvent('zrx_repairkit:client:syncRepair', -1, vehicle)
     else
-        Config.PunishPlayer(source, 'Tried to trigger "zrx_repairkit:server:syncRepair"')
+        Config.PunishPlayer(xPlayer.source, 'Tried to trigger "zrx_repairkit:server:syncRepair"')
     end
 end)
 
@@ -44,7 +46,7 @@ RegisterNetEvent('zrx_repairkit:server:cancelRepair', function()
         USED[source] = false
 
         if Webhook.Settings.cancelRepair then
-            DiscordLog(xPlayer.source, 'CANCEL REPAIR', 'Player cancelled a repair', 'cancelRepair')
+            DiscordLog(source, 'CANCEL REPAIR', 'Player cancelled a repair', 'cancelRepair')
         end
     else
         Config.PunishPlayer(source, 'Tried to trigger "zrx_repairkit:server:cancelRepair"')

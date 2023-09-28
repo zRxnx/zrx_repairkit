@@ -11,6 +11,10 @@ local IsPedInAnyVehicle = IsPedInAnyVehicle
 local IsControlJustPressed = IsControlJustPressed
 local SetEntityHeading = SetEntityHeading
 local GetHeadingFromVector_2d = GetHeadingFromVector_2d
+local Wait = Wait
+local TriggerServerEvent = TriggerServerEvent
+local DoesEntityExist = DoesEntityExist
+local vector3 = vector3
 
 RepairVehicle = function(vehicle, index)
     BUSY = true

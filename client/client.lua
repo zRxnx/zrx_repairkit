@@ -1,4 +1,8 @@
 ESX, COOLDOWN, BUSY, SHOW = Config.EsxImport(), false, false, false
+local DoesEntityExist = DoesEntityExist
+local SetVehicleFixed = SetVehicleFixed
+local SetVehicleDeformationFixed = SetVehicleDeformationFixed
+local SetVehicleTyreFixed = SetVehicleTyreFixed
 
 RegisterNetEvent('esx:playerLoaded',function(xPlayer)
     ESX.PlayerData = xPlayer
@@ -21,9 +25,14 @@ end)
 
 RegisterNetEvent('zrx_repairkit:client:syncRepair', function(vehicle)
     if not DoesEntityExist(vehicle) then return end
+    local tyres = { 0, 1, 2, 3, 4, 5, 45, 47 }
 
     SetVehicleFixed(vehicle)
     SetVehicleDeformationFixed(vehicle)
+
+    for i, data in pairs(tyres) do
+        SetVehicleTyreFixed(vehicle, data)
+    end
 end)
 
 exports('isBusy', function()
