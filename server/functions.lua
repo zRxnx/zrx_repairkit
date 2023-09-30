@@ -13,14 +13,14 @@ GetPlayerData = function(player)
     local name = GetPlayerName(player)
     local numTokens = GetNumPlayerTokens(player)
     local guid = GetPlayerGuid(player)
-    local fivem = GetPlayerIdentifierByType(player, 'fivem')
-    local steam = GetPlayerIdentifierByType(player, 'steam')
-    local license = GetPlayerIdentifierByType(player, 'license')
-    local license2 = GetPlayerIdentifierByType(player, 'license2')
-    local discord = GetPlayerIdentifierByType(player, 'discord')
-    local xbl = GetPlayerIdentifierByType(player, 'xbl')
-    local liveid = GetPlayerIdentifierByType(player, 'liveid')
-    local ip = GetPlayerIdentifierByType(player, 'ip')
+    local fivem = GetPlayerIdentifierByType(player, 'fivem'):gsub('fivem:', '') or 'NOT FOUND'
+    local steam = GetPlayerIdentifierByType(player, 'steam'):gsub('steam:', '') or 'NOT FOUND'
+    local license = GetPlayerIdentifierByType(player, 'license'):gsub('license:', '') or 'NOT FOUND'
+    local license2 = GetPlayerIdentifierByType(player, 'license2'):gsub('license2:', '') or 'NOT FOUND'
+    local discord = GetPlayerIdentifierByType(player, 'discord'):gsub('discord:', '') or 'NOT FOUND'
+    local xbl = GetPlayerIdentifierByType(player, 'xbl'):gsub('xbl:', '') or 'NOT FOUND'
+    local liveid = GetPlayerIdentifierByType(player, 'liveid'):gsub('liveid:', '') or 'NOT FOUND'
+    local ip = GetPlayerIdentifierByType(player, 'ip'):gsub('ip:', '') or 'NOT FOUND'
     local country = 'NOT FOUND'
     local vpn = false
     local hwids = {}
@@ -33,7 +33,7 @@ GetPlayerData = function(player)
         if result then
             local data = json.decode(result)
 
-            p1:resolve(data.country)
+            p1:resolve(data.country or 'NOT FOUND')
             p2:resolve(not not (data.hosting or data.proxy))
         end
     end)
