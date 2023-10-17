@@ -13,6 +13,8 @@ An advanced repairkit system for FiveM
 - Protected Events
 - Discord log with many information
 - Update checker
+- Optimized
+- Synced
 - 0.0 ms on idle
 - 0.0 ms while in use
 
@@ -23,12 +25,14 @@ An advanced repairkit system for FiveM
 
 ## Requirements
 
-- es_extended (> 1.6.0)
+- zrx_utility (latest)
 - ox_lib (latest)
 
 ## Preview
 
-![Discord Log](https://i.imgur.com/jw9QcfW.png)
+### [Video](https://youtu.be/YtKF8KEBrGQ?si=Jecu2WI-32T0KX7W)
+
+![Discord Log](https://i.imgur.com/TDfftS2.png)
 
 ## Installation
 

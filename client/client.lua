@@ -1,22 +1,15 @@
-ESX, COOLDOWN, BUSY, SHOW = Config.EsxImport(), false, false, false
+CORE = exports.zrx_utility:GetUtility()
+COOLDOWN, BUSY, SHOW = false, false, false
 local DoesEntityExist = DoesEntityExist
 local SetVehicleFixed = SetVehicleFixed
 local SetVehicleDeformationFixed = SetVehicleDeformationFixed
 local SetVehicleTyreFixed = SetVehicleTyreFixed
 
-RegisterNetEvent('esx:playerLoaded',function(xPlayer)
-    ESX.PlayerData = xPlayer
-end)
-
-RegisterNetEvent('esx:setJob', function(job)
-	ESX.PlayerData.job = job
-end)
-
 RegisterNetEvent('zrx_repairkit:client:startRepair', function(index)
     if BUSY then
-        return Config.Notification(nil, Strings.rep_busy)
+        return CORE.Bridge.notification(Strings.rep_busy)
     elseif COOLDOWN then
-        return Config.Notification(nil, Strings.rep_cooldown)
+        return CORE.Bridge.notification(Strings.rep_cooldown)
     end
 
     StartCooldown()
@@ -32,6 +25,10 @@ RegisterNetEvent('zrx_repairkit:client:syncRepair', function(vehicle)
 
     for i, data in pairs(tyres) do
         SetVehicleTyreFixed(vehicle, data)
+    end
+
+    if Config.UseVehicleDeformation then
+        exports.VehicleDeformation:FixVehicleDeformation(vehicle)
     end
 end)
 

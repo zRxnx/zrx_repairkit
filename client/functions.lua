@@ -15,8 +15,9 @@ local Wait = Wait
 local TriggerServerEvent = TriggerServerEvent
 local DoesEntityExist = DoesEntityExist
 local vector3 = vector3
+local NetworkGetNetworkIdFromEntity = NetworkGetNetworkIdFromEntity
 
-RepairVehicle = function(vehicle, index)
+RepairVehicle = function(vehicle, index, heading)
     BUSY = true
     local temp = Config.RepairKits[index]
 
@@ -27,9 +28,11 @@ RepairVehicle = function(vehicle, index)
         end
     end)
 
-    SetHeadingToEntity(vehicle)
+    if heading then
+        SetHeadingToEntity(vehicle)
+    end
     SetVehicleDoorOpen(vehicle, 4, false, false)
-    Config.Notification(nil, Strings.rep_started)
+    CORE.Bridge.notification(Strings.rep_started)
 
     lib.progressBar({
         duration = temp.usetime,
@@ -51,15 +54,15 @@ RepairVehicle = function(vehicle, index)
     TaskLeaveVehicle(cache.ped, vehicle, 0)
     SetVehicleDoorShut(vehicle, 4, false)
     SetVehicleUndriveable(vehicle, false)
-    Config.Notification(nil, Strings.rep_success)
-    TriggerServerEvent('zrx_repairkit:server:syncRepair', vehicle, index)
+    CORE.Bridge.notification(Strings.rep_success)
+    TriggerServerEvent('zrx_repairkit:server:syncRepair', vehicle, index, NetworkGetNetworkIdFromEntity(vehicle))
 end
 
 StartThread = function(index)
     local temp = Config.RepairKits[index]
 
     if not DoesEntityExist(cache.vehicle) then
-        return Config.Notification(nil, Strings.not_in_vehicle)
+        return CORE.Bridge.notification(Strings.not_in_vehicle)
     end
 
     local vehicle = cache.vehicle
@@ -67,24 +70,25 @@ StartThread = function(index)
 
     if temp.allowedClasses and not temp.allowedClasses[GetVehicleClass(vehicle)] then
         TriggerServerEvent('zrx_repairkit:server:cancelRepair')
-        return Config.Notification(nil, Strings.rep_wrong)
+        return CORE.Bridge.notification(Strings.rep_wrong)
     end
 
     if temp.allowedVehicles and not temp.allowedVehicles[GetEntityModel(vehicle)] then
         TriggerServerEvent('zrx_repairkit:server:cancelRepair')
-        return Config.Notification(nil, Strings.rep_wrong)
+        return CORE.Bridge.notification(Strings.rep_wrong)
     end
 
-    if temp.allowedJobs and not temp.allowedJobs[ESX.PlayerData.job.name] then
+    if temp.allowedJobs and not temp.allowedJobs[CORE.Bridge.getVariables().job.name] then
         TriggerServerEvent('zrx_repairkit:server:cancelRepair')
-        return Config.Notification(nil, Strings.rep_cannot)
+        return CORE.Bridge.notification(Strings.rep_cannot)
     end
 
     CreateThread(function()
         SHOW = true
         local pedCoords
 
-        if type(carHood) == 'vector3' then
+        print(carHood)
+        if type(carHood) == 'vector3' and carHood.x > 0.0 then
             TaskLeaveVehicle(cache.ped, cache.vehicle, 0)
             Wait(1000)
 
@@ -97,18 +101,19 @@ StartThread = function(index)
                 not IsPedInAnyVehicle(cache.ped, false) and IsControlJustPressed(0, 51) then
                     SHOW = false
                     Config.TextUI('close')
-                    RepairVehicle(vehicle, index)
+                    RepairVehicle(vehicle, index, true)
                 elseif IsPedInAnyVehicle(cache.ped, true) or #(vector3(pedCoords.x, pedCoords.y, pedCoords.z) - vector3(carHood.x, carHood.y, carHood.z)) > 2 then
                     SHOW = false
                     BUSY = false
                     Config.TextUI('close')
-                    Config.Notification(nil, Strings.rep_error)
+                    CORE.Bridge.notification(Strings.rep_error)
+                    TriggerServerEvent('zrx_repairkit:server:cancelRepair')
                 end
 
                 Wait()
             end
         else
-            RepairVehicle(vehicle, index)
+            RepairVehicle(vehicle, index, false)
         end
     end)
 end

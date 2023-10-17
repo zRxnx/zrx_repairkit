@@ -3,6 +3,7 @@ Config = {}
 
 Config.CheckForUpdates = true --| Check for updates?
 Config.Cooldown = 3 --| Note: Between actions | In seconds
+Config.UseVehicleDeformation = false --| https://forum.cfx.re/t/release-vehicledeformation-get-set-and-sync-vehicle-deformations-now-a-full-resource/4796026
 
 Config.RepairKits = {
     {
@@ -49,30 +50,18 @@ Config.TextUI = function(action, msg)
     end
 end
 
---| Place here your notification
-Config.Notification = function(source, msg)
-    if IsDuplicityVersion() then
-        TriggerClientEvent('esx:showNotification', player, msg, 'info')
-    else
-        ESX.ShowNotification(msg)
-    end
-end
-
 --| Place here your punish actions
 Config.PunishPlayer = function(player, reason)
     if not IsDuplicityVersion() then return end
-    if Webhook.Settings.punish then
-        DiscordLog(player, 'PUNISH', reason, 'punish')
+    if Webhook.Links.punish:len() > 0 then
+        local message = ([[
+            The player got punished
+
+            Reason: **%s**
+        ]]):format(reason)
+
+        CORE.Server.DiscordLog(player, 'PUNISH', message, Webhook.Links.punish)
     end
 
     DropPlayer(player, reason)
-end
-
---| Place here your esx Import
-Config.EsxImport = function()
-	if IsDuplicityVersion() then
-		return exports.es_extended:getSharedObject()
-	else
-		return exports.es_extended:getSharedObject()
-	end
 end
