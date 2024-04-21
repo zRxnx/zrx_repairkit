@@ -78,7 +78,7 @@ StartThread = function(index)
         return CORE.Bridge.notification(Strings.rep_wrong)
     end
 
-    if temp.allowedJobs and not temp.allowedJobs[CORE.Bridge.getVariables().job.name] then
+    if temp.allowedJobs and not temp.allowedJobs[CORE.Bridge.getPlayerObject().job.name] then
         TriggerServerEvent('zrx_repairkit:server:cancelRepair')
         return CORE.Bridge.notification(Strings.rep_cannot)
     end
@@ -110,7 +110,7 @@ StartThread = function(index)
                     TriggerServerEvent('zrx_repairkit:server:cancelRepair')
                 end
 
-                Wait()
+                Wait(0)
             end
         else
             RepairVehicle(vehicle, index, false)

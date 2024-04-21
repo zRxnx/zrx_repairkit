@@ -5,7 +5,7 @@ use_experimental_fxv2_oal 'yes'
 
 author 'zRxnx'
 description 'Advanced repairkit system'
-version '2.2.0'
+version '2.3.0'
 
 dependencies {
     'zrx_utility',

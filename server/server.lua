@@ -1,3 +1,4 @@
+---@diagnostic disable: cast-local-type, need-check-nil
 CORE = exports.zrx_utility:GetUtility()
 PLAYER_CACHE, USED = {}, {}
 local TriggerClientEvent = TriggerClientEvent
@@ -51,7 +52,7 @@ RegisterNetEvent('zrx_repairkit:server:syncRepair', function(vehicle, index, net
                 Vehicle Model: **%s**
                 Vehicle Hash: **%s**
                 Config Index: **%s**
-            ]]):format(veh, model, GetHashKey(model), index)
+            ]]):format(veh, model, GetHashKey(tostring(model)), index)
 
             CORE.Server.DiscordLog(source, 'END REPAIR', message, Webhook.Links.endRepair)
         end
