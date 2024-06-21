@@ -41,6 +41,7 @@ end)
 RegisterNetEvent('zrx_repairkit:server:syncRepair', function(vehicle, index, network)
     if USED[source] and type(vehicle) == 'number' and type(index) == 'number' then
         USED[source] = false
+        local player = CORE.Bridge.getPlayerObject(source)
         local veh = NetworkGetEntityFromNetworkId(network)
         local model = GetEntityModel(veh)
 
@@ -57,7 +58,7 @@ RegisterNetEvent('zrx_repairkit:server:syncRepair', function(vehicle, index, net
             CORE.Server.DiscordLog(source, 'END REPAIR', message, Webhook.Links.endRepair)
         end
 
-        CORE.Bridge.removeInventoryItem(source, Config.RepairKits[index].item, 1)
+        player.removeInventoryItem(Config.RepairKits[index].item, 1)
         TriggerClientEvent('zrx_repairkit:client:syncRepair', -1, vehicle)
     else
         Config.PunishPlayer(source, 'Tried to trigger "zrx_repairkit:server:syncRepair"')
