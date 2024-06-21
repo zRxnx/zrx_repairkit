@@ -5,7 +5,7 @@ use_experimental_fxv2_oal 'yes'
 
 author 'zRxnx'
 description 'Advanced repairkit system'
-version '2.3.1'
+version '2.3.2'
 
 docs 'https://docs.zrxnx.at'
 discord 'https://discord.gg/mcN25FJ33K'
